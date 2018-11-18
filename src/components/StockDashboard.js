@@ -211,7 +211,7 @@ class StockDashboard extends Component {
 
     return (
       <div className="dashboard">
-        {
+        {/* {
           this.state.currPrice.length>0
           ? <LineChart
               margin={this.state.margin}
@@ -228,8 +228,8 @@ class StockDashboard extends Component {
               handleTimeScaleSelection={this.handleTimeScaleSelection}
             />
           : ''
-        }
-        {/* {
+        } */}
+        {
           this.state.currPrice.length>0
           ? <LineChart2
               margin={this.state.margin}
@@ -246,7 +246,7 @@ class StockDashboard extends Component {
               handleTimeScaleSelection={this.handleTimeScaleSelection}
             />
           : ''
-        } */}
+        }
       </div>
     )
   }
