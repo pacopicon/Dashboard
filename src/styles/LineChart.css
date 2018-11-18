@@ -1,0 +1,54 @@
+.lineChart {
+  height: 100%;
+}
+
+.xAxis, .yAxis {
+  fill: none;
+  stroke: white;
+  color: white;
+  background-color: white;
+}
+
+/* .xAxis line {
+  fill: none;
+  stroke: white;
+  stroke-width: 1;
+}
+
+path.domain {
+  fill: none;
+  stroke: white;
+} */
+
+path {
+  /* fill: #58B5FD; */
+  fill: none;
+  shape-rendering: geometricPrecision;
+  /*stroke: #58B5FD;*/
+  stroke: #58B5FD;
+  stroke-width: 1;
+  transition-timing-function: ease-in-out;
+}
+
+.tick line{
+  opacity: 0.2;
+  stroke: white;
+}
+
+text {
+  fill: white;
+  font-size: 15px;
+}
+
+.yAxis .tick text {
+  text-anchor: start;
+}
+
+.xAxis {
+  text-anchor: end;
+}
+
+.xAxis .tick text {
+  transform: rotate(-45deg) !important;
+  font-size: 15px;
+}

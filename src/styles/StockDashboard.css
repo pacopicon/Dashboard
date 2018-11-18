@@ -1,0 +1,21 @@
+.dashboard {
+  display: block;
+  width: 800px;
+}
+
+.stockInfo p, h1, h2, h3, small {
+  margin: 0;
+  padding: 0;
+  padding-bottom: 0.2em;
+  color: white;
+}
+
+.LineChartContainer {
+  /* width: 250px; */
+}
+
+.select {
+  float: left;
+  margin-left: 2em;
+  color: black;
+}
