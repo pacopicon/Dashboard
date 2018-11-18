@@ -1,6 +1,7 @@
 import * as React from "react";
 import * as d3 from "d3";
 import { easement } from '../helpers'
+import '../styles/LineChart.css'
 
 import * as Axis from "d3-axis";
 
@@ -30,13 +31,13 @@ class LineChart extends React.Component {
         maxX      = d3.max(data.map(o => o.date)),
         minY      = d3.min(data.map(o => o.price)),
         maxY      = d3.max(data.map(o => o.price)),
-        x         = d3.scaleLinear().domain([minX, maxX]).range([0, width]),
-        y         = d3.scaleLinear().domain([minY, maxY]).range([height, height / 3]),
+        xScale    = d3.scaleLinear().domain([minX, maxX]).range([0, width]),
+        yScale   = d3.scaleTime().domain([minY, maxY]).range([height, height / 3]),
         lineDraw  = d3.line().x(function(d) {
-                      return x(d.date)
+                      return xScale(d.date)
                     })
                     .y(function(d) {
-                      return y(d.price)
+                      return yScale(d.price)
                     }),
         line      = d3.selectAll("#line") // WORKS!!!
 
@@ -51,16 +52,36 @@ class LineChart extends React.Component {
         // svg.transition() // pattern # 1,2 -> DOES NOT WORK
         // svg // pattern # 3 -> DOES NOT WORK
         line.transition() // WORKS!!!
-        .duration(1000)
-        .ease(easement)
-        .attr("stroke-width", 1)
-        .attr("stroke", "#6788ad")
-        .attr("d", lineDraw(data))
-        .on("end", () => 
-          this.setState({
-            data
-          })
-        )
+          .duration(1000)
+          .ease(easement)
+          .attr("stroke-width", 1)
+          .attr("stroke", "#6788ad")
+          .attr("d", lineDraw(data))
+          .on("end", () => 
+            this.setState({
+              data
+            })
+          )
+  
+        let xAxis = d3.axisBottom().scale(xScale).ticks(20).tickSize(-height)
+        let yAxis = d3.axisLeft().scale(yScale).ticks(10).tickSize(-width)
+        
+        let svg = d3.select('.svg')
+  
+        svg.append("g").transition() // WORKS!!!
+          .duration(1000)
+          .ease(easement)
+          .attr("class", "x axis")
+          .attr("stroke-width", 1)
+          .attr("transform", "translate(0," + height + ")")
+          .call(xAxis);
+  
+        svg.append("g").transition() // WORKS!!!
+          .duration(1000)
+          .ease(easement)
+          .attr("stroke-width", 1)
+          .attr("class", "y axis")
+          .call(yAxis);
       
     }
   }
@@ -92,6 +113,41 @@ class LineChart extends React.Component {
         // .attr("stroke-width", 0) // this makes the line disappear
         .attr("stroke-dashoffset", 0);
 
+      const 
+        height = 300,
+        width = 500,    
+        minX = d3.min(data.map(o => o.date)),
+        maxX = d3.max(data.map(o => o.date)),
+        minY = d3.min(data.map(o => o.price)),
+        maxY = d3.max(data.map(o => o.price))
+  
+      let xScale = d3
+        .scaleLinear()
+        .domain([minX, maxX])
+        .range([0, width]);
+  
+      let yScale = d3
+        .scaleTime()
+        .domain([minY, maxY])
+        .range([height, height / 3]);
+
+      let xAxis = d3.axisBottom().scale(xScale).ticks(20).tickSize(-height)
+      let yAxis = d3.axisLeft().scale(yScale).ticks(10).tickSize(-width)
+      
+      let svg = d3.select('.svg')
+
+      svg.append("g")
+        .attr("class", "x axis")
+        .attr("stroke-width", 1)
+        .attr("transform", "translate(0," + height + ")")
+        .call(xAxis);
+
+      svg.append("g")
+        .attr("stroke-width", 1)
+        .attr("class", "y axis")
+        .call(yAxis);
+
+
     })
   }
 
@@ -117,24 +173,40 @@ class LineChart extends React.Component {
     const minY = d3.min(data.map(o => o.price));
     const maxY = d3.max(data.map(o => o.price));
 
-    let x = d3
+    let xScale = d3
       .scaleLinear()
       .domain([minX, maxX])
       .range([0, width]);
 
-    let y = d3
-      .scaleLinear()
+    let yScale = d3
+      .scaleTime()
       .domain([minY, maxY])
       .range([height, height / 3]);
 
     let line = d3
       .line()
       .x(function(d) {
-        return x(d.date);
+        return xScale(d.date);
       })
       .y(function(d) {
-        return y(d.price);
+        return yScale(d.price);
       });
+    
+    // let svg = d3.select(".svg")
+    //   .attr("width", width + margin.left + margin.right)
+    //   .attr("height", height + margin.top + margin.bottom)
+    //   .append("g")
+    //   .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    // let xAxis = d3.axisBottom().scale(xScale).ticks(20).tickSize(-height)
+    // let yAxis = d3.axisLeft().scale(yScale).ticks(10).tickSize(-width)
+
+    // d3.select('#xAxis')
+    //   .attr("transform", "translate(0," + height + ")")
+    //   .call(xAxis);
+    
+    // d3.select('#yAxis')
+    //   .call(yAxis);
 
     // let area = d3
     //   .area()
@@ -172,8 +244,7 @@ class LineChart extends React.Component {
               <stop offset="95%" stopColor="#6788ad" />
             </linearGradient>
           </defs>
-
-          <g id={"xAxis"}>
+          <g id="xAxisg">
             <path
               id={"line"}
               d={line(data)}
