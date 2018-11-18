@@ -33,7 +33,7 @@ class LineChart extends React.Component {
       margin  = nextProps.margin
     
     if (oldData != data) {
-      this.paintChart(margin, height, width, data, false)
+      this.applyTransitions(margin, height, width, data, false)
     }
   }
 
@@ -55,7 +55,7 @@ class LineChart extends React.Component {
       width,
       margin
     }, () => {
-      this.paintChart(margin, height, width, data, true)
+      this.applyTransitions(margin, height, width, data, true)
     })
   }
 
@@ -94,7 +94,7 @@ class LineChart extends React.Component {
     return drawLine(data)
   }
 
-  paintChart = (margin, height, width, data, isFirstLoad) => {
+  applyTransitions = (margin, height, width, data, isFirstLoad) => {
     let 
       minX      = d3.min(data.map(o => o.date)),
       maxX      = d3.max(data.map(o => o.date)),

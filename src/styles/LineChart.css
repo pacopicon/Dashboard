@@ -2,14 +2,14 @@
   height: 100%;
 }
 
-.xAxis, .yAxis {
+#hori, #vert {
   fill: none;
   stroke: white;
   color: white;
   background-color: white;
 }
 
-/* .xAxis line {
+/* #hori line {
   fill: none;
   stroke: white;
   stroke-width: 1;
@@ -25,9 +25,9 @@ path {
   fill: none;
   shape-rendering: geometricPrecision;
   /*stroke: #58B5FD;*/
-  stroke: #58B5FD;
+  /* stroke: #58B5FD; */
   stroke-width: 1;
-  transition-timing-function: ease-in-out;
+  /* transition-timing-function: ease-in-out; */
 }
 
 .tick line{
@@ -40,15 +40,15 @@ text {
   font-size: 15px;
 }
 
-.yAxis .tick text {
-  text-anchor: start;
-}
-
-.xAxis {
+#vert .tick text {
   text-anchor: end;
 }
 
-.xAxis .tick text {
+#hori {
+  text-anchor: start;
+}
+
+#hori .tick text {
   transform: rotate(-45deg) !important;
   font-size: 15px;
 }
