@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import '../styles/StockDashboard.css'
 import LineChart from './LineChart'
+import LineChart2 from './LineChart2'
+import LineChart3 from './LineChart3'
 import { getSecuritiesInfo } from '../helpers'
 import integrateData from './APIcall'
 
@@ -11,7 +13,10 @@ class StockDashboard extends Component {
     super()
     this.state = {
       isFetchingAPI: false,
-      body_width: document.body.clientWidth * widMod,
+      // body_width: document.body.clientWidth * widMod,
+      margin: {top: 20, right: 20, bottom: 80, left: 50},
+      height: 315,
+      width: 500,
       securities: getSecuritiesInfo(),
       security: 'MMM',
       timeScales: {'1D':1, '1W':8, '1M':32, '3M':(94), '6M':(187), '1Y':(366), '2Y':(731)},
@@ -42,27 +47,27 @@ class StockDashboard extends Component {
     this.handleTimeScaleSelection = this.handleTimeScaleSelection.bind(this)
     this.updateData = this.updateData.bind(this)
     this.checkIfItsFetching = this.checkIfItsFetching.bind(this)
-    window.addEventListener("resize", this.resize().bind(this));
+    // window.addEventListener("resize", this.resize().bind(this));
     // this.callSecuritiesInfoAPI = this.callSecuritiesInfoAPI.bind(this)
     // callDatePriceAPI(1, 'MMM', this.updateData)
     
   }
 
-  resize() {
-    let t;
+  // resize() {
+  //   let t;
 
-    return event => {
-      if (t) {
-        clearTimeout(t)
-      }
-      t = setTimeout( () => {
-        const state = Object.assign(this.state, {
-          body_width: document.body.clientWidth * widMod
-        });
-        this.setState(state)
-      }, 100)
-    }
-  }
+  //   return event => {
+  //     if (t) {
+  //       clearTimeout(t)
+  //     }
+  //     t = setTimeout( () => {
+  //       const state = Object.assign(this.state, {
+  //         body_width: document.body.clientWidth * widMod
+  //       });
+  //       this.setState(state)
+  //     }, 100)
+  //   }
+  // }
 
   
 
@@ -207,23 +212,41 @@ class StockDashboard extends Component {
     return (
       <div className="dashboard">
         {
-          this.state.currPrice.length>0 
-          ? <div className="LineChartContainer">
-              <LineChart 
-                data={this.state.currPrice}
-                TEXT={this.state.TEXT}
-                NUMERIC={this.state.NUMERIC}
-                securities={this.state.securities}
-                isFetchingAPI={this.state.isFetchingAPI}
-                renderSecuritiesOptions={this.renderSecuritiesOptions}
-                renderTimeOptions={this.renderTimeOptions}
-                handleSymbolSelection={this.handleSymbolSelection}
-                handleTimeScaleSelection={this.handleTimeScaleSelection}
-              />
-            </div>
+          this.state.currPrice.length>0
+          ? <LineChart
+              margin={this.state.margin}
+              height={this.state.height}
+              width={this.state.width}
+              data={this.state.currPrice}
+              TEXT={this.state.TEXT}
+              NUMERIC={this.state.NUMERIC}
+              securities={this.state.securities}
+              isFetchingAPI={this.state.isFetchingAPI}
+              renderSecuritiesOptions={this.renderSecuritiesOptions}
+              renderTimeOptions={this.renderTimeOptions}
+              handleSymbolSelection={this.handleSymbolSelection}
+              handleTimeScaleSelection={this.handleTimeScaleSelection}
+            />
           : ''
         }
-        {/* <BouncingBall /> */}
+        {/* {
+          this.state.currPrice.length>0
+          ? <LineChart2
+              margin={this.state.margin}
+              height={this.state.height}
+              width={this.state.width}
+              data={this.state.currPrice}
+              TEXT={this.state.TEXT}
+              NUMERIC={this.state.NUMERIC}
+              securities={this.state.securities}
+              isFetchingAPI={this.state.isFetchingAPI}
+              renderSecuritiesOptions={this.renderSecuritiesOptions}
+              renderTimeOptions={this.renderTimeOptions}
+              handleSymbolSelection={this.handleSymbolSelection}
+              handleTimeScaleSelection={this.handleTimeScaleSelection}
+            />
+          : ''
+        } */}
       </div>
     )
   }

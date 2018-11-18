@@ -1,13 +1,13 @@
-import * as React from "react"
-import * as d3 from "d3"
+import * as React from "react";
+import * as d3 from "d3";
 import { easement } from '../helpers'
 import '../styles/LineChart.css'
 
-import * as Axis from "d3-axis"
+import * as Axis from "d3-axis";
 
-class LineChart extends React.Component {
+class LineChart3 extends React.Component {
   constructor() {
-    super()
+    super();
 
     this.state = {
       totalLength: '',
@@ -21,7 +21,7 @@ class LineChart extends React.Component {
       frmHeight: '',
       frmWidth: ''
 
-    }
+    };
   }
 
   componentWillReceiveProps(nextProps) {
@@ -84,16 +84,11 @@ class LineChart extends React.Component {
       hori      = d3.select('#hori'),
       vert      = d3.select('#vert')
 
-      console.log('svg = ', svg)
-      console.log('hori = ', hori)
-      console.log('vert = ', vert)
-      console.log('line = ', line)
-
     svg
-      .attr("width", frmWidth.toString())
-      .attr("height", frmHeight.toString())
+      .attr("width", frmWidth)
+      .attr("height", frmHeight)
       .append("g")
-      .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     hori.transition()
       .duration(1000)
@@ -101,19 +96,19 @@ class LineChart extends React.Component {
       .attr("class", "x axis")
       .attr("stroke-width", 1)
       .attr("transform", "translate(0," + height + ")")
-      .call(xAxis)
+      .call(xAxis);
 
     vert.transition()
       .duration(1000)
       .ease(easement)
       .attr("stroke-width", 1)
       .attr("class", "y axis")
-      .call(yAxis)
+      .call(yAxis);
 
     if (isFirstLoad && line) {
       console.log('line = ', line)
       console.log('line.node() = ', line.node())
-      let totalLength = line.node().getTotalLength()
+      let totalLength = line.node().getTotalLength();
       line
         .attr("stroke-dasharray", totalLength)
         .attr("stroke-dashoffset", totalLength)
@@ -123,7 +118,7 @@ class LineChart extends React.Component {
         .duration(1000)
         .ease(easement)
         // .attr("stroke-width", 0) // this makes the line disappear
-        .attr("stroke-dashoffset", 0)
+        .attr("stroke-dashoffset", 0);
     } else if (line) {
       line.transition()
         .duration(1000)
@@ -150,17 +145,19 @@ class LineChart extends React.Component {
 
   render() {
     let {
+          line,
+          hori,
+          vert,
           data,
           NUMERIC,
           TEXT,
           frmHeight,
           frmWidth
-        } = this.state
+        } = this.state;
 
     let { 
           height, 
-          width,
-          margin 
+          width 
         }  = this.props
 
     const boxStyles = {
@@ -168,115 +165,120 @@ class LineChart extends React.Component {
       height: frmHeight,
       borderRadius: 5,
       margin: "0 auto"
-    }
+    };
 
-    const minX = d3.min(data.map(o => o.date))
-    const maxX = d3.max(data.map(o => o.date))
-    const minY = d3.min(data.map(o => o.price))
-    const maxY = d3.max(data.map(o => o.price))
+    // const minX = d3.min(data.map(o => o.date));
+    // const maxX = d3.max(data.map(o => o.date));
+    // const minY = d3.min(data.map(o => o.price));
+    // const maxY = d3.max(data.map(o => o.price));
 
-    let xScale = d3
-      .scaleLinear()
-      .domain([minX, maxX])
-      .range([0, width])
+    // let xScale = d3
+    //   .scaleLinear()
+    //   .domain([minX, maxX])
+    //   .range([0, width]);
 
-    let yScale = d3
-      .scaleTime()
-      .domain([minY, maxY])
-      .range([height, height / 3])
+    // let yScale = d3
+    //   .scaleTime()
+    //   .domain([minY, maxY])
+    //   .range([height, height / 3]);
 
-    let line = d3
-      .line()
-      .x(function(d) {
-        return xScale(d.date)
-      })
-      .y(function(d) {
-        return yScale(d.price)
-      })
+    // let line = d3
+    //   .line()
+    //   .x(function(d) {
+    //     return xScale(d.date);
+    //   })
+    //   .y(function(d) {
+    //     return yScale(d.price);
+    //   });
     
-    d3.select(".svg")
-      .attr("width", frmWidth.toString())
-      .attr("height", frmHeight.toString())
-      .append("g")
-      .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+    // let svg = d3.select(".svg")
+    //   .attr("width", width + margin.left + margin.right)
+    //   .attr("height", height + margin.top + margin.bottom)
+    //   .append("g")
+    //   .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    let xAxis = d3.axisBottom().scale(xScale).ticks(20).tickSize(-height)
-    let yAxis = d3.axisLeft().scale(yScale).ticks(10).tickSize(-width)
+    // let xAxis = d3.axisBottom().scale(xScale).ticks(20).tickSize(-height)
+    // let yAxis = d3.axisLeft().scale(yScale).ticks(10).tickSize(-width)
 
     // d3.select('#xAxis')
     //   .attr("transform", "translate(0," + height + ")")
-    //   .call(xAxis)
+    //   .call(xAxis);
     
     // d3.select('#yAxis')
-    //   .call(yAxis)
+    //   .call(yAxis);
 
     // let area = d3
     //   .area()
     //   .x(function(d) {
-    //     return x(d.date)
+    //     return x(d.date);
     //   })
     //   .y0(function(d) {
-    //     return maxY
+    //     return maxY;
     //   })
     //   .y1(function(d) {
-    //     return y(d.price)
-    //   })
+    //     return y(d.price);
+    //   });
 
     return (
       <div style={boxStyles}>
-  
-        {/*<div className="stockInfo">
-          <h1><p>{TEXT[0]} ({TEXT[1]}) <small>sector: {TEXT[2]}</small></p></h1>
-          <div className="rightInfo col-xs-6">
-            <h3>open: ${NUMERIC.open}</h3>
-            <h3>high: ${NUMERIC.high}</h3>
-            <h3>low: ${NUMERIC.low}</h3>
-          </div>
-          <div className="leftInfo col-xs-6">
-            <h3>close: ${NUMERIC.close}</h3>
-            <h3>volume: {NUMERIC.totalVol}</h3>
-            <small>last update: {NUMERIC.date} ({NUMERIC.alert})</small>
-          </div>
-        </div>*/}
-        {/* <svg className="svg" height={frmHeight} width={frmWidth}> */}
-        <svg className="svg">
-          <defs>
-            <linearGradient id="MyGradient">
-              <stop offset="-10%" stopColor="#3b83d4" />
-              <stop offset="95%" stopColor="#6788ad" />
-            </linearGradient>
-          </defs>
-          <path
-            id={"line"}
-            d={line(data)}
-            fill={"transparent"}
-            stroke={"transparent"}
-          />
-            {/* <path
-              id={"area"}
-              d={area(data)}
-              fill={"url(#MyGradient)"}
-              style={{ opacity: 0.8 }}
-            /> */}
-          <g id="hori">
-          </g>
-          <g id="vert">
-          </g>
+        {
+          line && vert && hori 
+          ? <div>
+                  {/*<div className="stockInfo">
+                <h1><p>{TEXT[0]} ({TEXT[1]}) <small>sector: {TEXT[2]}</small></p></h1>
+                <div className="rightInfo col-xs-6">
+                  <h3>open: ${NUMERIC.open}</h3>
+                  <h3>high: ${NUMERIC.high}</h3>
+                  <h3>low: ${NUMERIC.low}</h3>
+                </div>
+                <div className="leftInfo col-xs-6">
+                  <h3>close: ${NUMERIC.close}</h3>
+                  <h3>volume: {NUMERIC.totalVol}</h3>
+                  <small>last update: {NUMERIC.date} ({NUMERIC.alert})</small>
+                </div>
+              </div>*/}
 
-        </svg>
-        <div className="select">
-          <form>
-            {
-              !this.props.isFetchingAPI 
-                ? this.props.renderSecuritiesOptions()
-                : <div>waiting on Data</div> 
-            }
-            { this.props.renderTimeOptions() }
-          </form>
-        </div>
+              <svg className="svg" height={height} width={width}>
+                <defs>
+                  <linearGradient id="MyGradient">
+                    <stop offset="-10%" stopColor="#3b83d4" />
+                    <stop offset="95%" stopColor="#6788ad" />
+                  </linearGradient>
+                </defs>
+                <path
+                  id={"line"}
+                  d={line(data)}
+                  fill={"transparent"}
+                  stroke={"transparent"}
+                />
+                  {/* <path
+                    id={"area"}
+                    d={area(data)}
+                    fill={"url(#MyGradient)"}
+                    style={{ opacity: 0.8 }}
+                  /> */}
+                <g id="hori">
+                </g>
+                <g id="vert">
+                </g>
+
+              </svg>
+              <div className="select">
+                <form>
+                  {
+                    !this.props.isFetchingAPI 
+                      ? this.props.renderSecuritiesOptions()
+                      : <div>waiting on Data</div> 
+                  }
+                  { this.props.renderTimeOptions() }
+                </form>
+              </div>
+            </div>
+          : null
+        }
       </div>
-    )
+    );
   }
 }
 
-export default LineChart
+export default LineChart3
