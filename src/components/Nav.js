@@ -1,6 +1,5 @@
 import React from 'react';
-// import rebase from '../base';
-import '../styles/Nav.css';
+import '../styles/Nav.css'
 import Clock from './Clock'
 
 class Nav extends React.Component {

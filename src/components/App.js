@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Nav from './Nav'
-import StockDashboard from './StockDashboard'
-import '../styles/App.css'
+import Dashboard from './Dashboard'
+import '../styles/styles.css'
 
 
 class App extends Component {
@@ -12,7 +12,7 @@ class App extends Component {
           linkClicked={true}
         />
         <div className="stockDashboard">
-          <StockDashboard />
+          <Dashboard />
         </div>
       </div>
     );

@@ -1,14 +1,12 @@
 import React, { Component } from 'react'
-import '../styles/StockDashboard.css'
+import '../styles/styles.css'
 import LineChart from './LineChart'
-import LineChart2 from './LineChart2'
-import LineChart3 from './LineChart3'
 import { getSecuritiesInfo } from '../helpers'
 import integrateData from './APIcall'
 
 const widMod = .60
 
-class StockDashboard extends Component {
+class Dashboard extends Component {
   constructor() {
     super()
     this.state = {
@@ -16,7 +14,7 @@ class StockDashboard extends Component {
       // body_width: document.body.clientWidth * widMod,
       margin: {top: 20, right: 20, bottom: 80, left: 50},
       height: 500,
-      width: 700,
+      width: 750,
       securities: getSecuritiesInfo(),
       security: 'MMM',
       timeScales: {'1D':1, '1W':8, '1M':32, '3M':(94), '6M':(187), '1Y':(366), '2Y':(731)},
@@ -208,33 +206,15 @@ class StockDashboard extends Component {
   }
 
   render() {
-
+    let { width } = this.state
     return (
-      <div className="dashboard">
-        {/* {
+      <div className="dashboard" style={{width: `${width}`}}>
+        {
           this.state.currPrice.length>0
           ? <LineChart
               margin={this.state.margin}
               height={this.state.height}
-              width={this.state.width}
-              data={this.state.currPrice}
-              TEXT={this.state.TEXT}
-              NUMERIC={this.state.NUMERIC}
-              securities={this.state.securities}
-              isFetchingAPI={this.state.isFetchingAPI}
-              renderSecuritiesOptions={this.renderSecuritiesOptions}
-              renderTimeOptions={this.renderTimeOptions}
-              handleSymbolSelection={this.handleSymbolSelection}
-              handleTimeScaleSelection={this.handleTimeScaleSelection}
-            />
-          : ''
-        } */}
-        {
-          this.state.currPrice.length>0
-          ? <LineChart2
-              margin={this.state.margin}
-              height={this.state.height}
-              width={this.state.width}
+              width={width}
               data={this.state.currPrice}
               TEXT={this.state.TEXT}
               NUMERIC={this.state.NUMERIC}
@@ -254,4 +234,4 @@ class StockDashboard extends Component {
 
 }
 
-export default StockDashboard;
+export default Dashboard;

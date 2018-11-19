@@ -1,3 +1,51 @@
+Body {
+  font-family: 'Poppins', sans-serif;
+  /*font-family: 'Montserrat', sans-serif*/
+  /*background-color: black;*/
+  background-color:black;
+}
+
+.hidden {
+  display: none;
+}
+
+.App {
+  text-align: center;
+}
+
+.App-header {
+  /*background-color: #222;*/
+  height: 20px;
+  padding: 20px;
+  color: white;
+}
+
+.App-header p {
+  font-size: 2em;
+  line-height: 20px;
+  padding: 0;
+  margin: 0;
+}
+
+.linkBtn {
+  color: white;
+}
+
+/* StochDashboard */
+
+.dashboard {
+  display: block;
+  margin-left: 10px;
+}
+
+.select {
+  float: left;
+  margin-left: 2em;
+  color: black;
+}
+
+/* LineChart.js */
+
 .lineChart {
   height: 100%;
 }
@@ -26,12 +74,12 @@ path {
   shape-rendering: geometricPrecision;
   /*stroke: #58B5FD;*/
   /* stroke: #58B5FD; */
-  stroke-width: 1;
+  stroke-width: 2;
   /* transition-timing-function: ease-in-out; */
 }
 
 .tick line{
-  opacity: 0.2;
+  opacity: 0.5;
   stroke: white;
 }
 
