@@ -65,8 +65,10 @@ class LineChart extends React.Component {
       maxY      = d3.max(data.map(o => o.price)),
       axlHeight = height - margin.top - margin.bottom,
       axlWidth  = width - margin.left - margin.right,
-      xScale    = d3.scaleTime().domain([minX, maxX]).range([0, axlWidth]),
-      yScale    = d3.scaleLinear().domain([minY, maxY]).range([axlHeight, 0])
+      xScale    = d3.scaleTime().domain(d3.extent(data, d => d.date)),
+      yScale    = d3.scaleLinear().domain([0, d3.max(d => d.price)])
+      // xScale    = d3.scaleTime().domain([minX, maxX]).range([0, axlWidth]),
+      // yScale    = d3.scaleLinear().domain([minY, maxY]).range([axlHeight, 0])
   
     return {
       xScale,
@@ -102,8 +104,10 @@ class LineChart extends React.Component {
       axlWidth  = width - margin.left - margin.right,
       frmHeight = height + margin.top + margin.bottom,
       frmWidth  = width + margin.left + margin.right,
-      xScale    = d3.scaleTime().domain([minX, maxX]).range([0, axlWidth]),
-      yScale    = d3.scaleLinear().domain([minY, maxY]).range([axlHeight, 0]),
+      xScale    = d3.scaleTime().domain(d3.extent(data, d => d.date)),
+      yScale    = d3.scaleLinear().domain([0, d3.max(d => d.price)]),
+      // xScale    = d3.scaleTime().domain([minX, maxX]).range([0, axlWidth]),
+      // yScale    = d3.scaleLinear().domain([minY, maxY]).range([axlHeight, 0]),
       xAxis     = d3.axisBottom().scale(xScale).ticks(20).tickSize(-axlHeight),
       yAxis     = d3.axisLeft().scale(yScale).ticks(10).tickSize(-axlWidth),
       line      = d3.selectAll("#line"),
@@ -133,7 +137,7 @@ class LineChart extends React.Component {
       .duration(1000)
       .ease(easement)
       .attr("stroke-width", 1)
-      // .attr("transform", "translate(0," + height + ")")
+      .attr("transform", "translate(" + margin.left + ", 0)")
       .call(yAxis)
 
     if (isFirstLoad && line) {
