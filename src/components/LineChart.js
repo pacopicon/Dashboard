@@ -65,10 +65,10 @@ class LineChart extends React.Component {
       maxY      = d3.max(data.map(o => o.price)),
       axlHeight = height - margin.top - margin.bottom,
       axlWidth  = width - margin.left - margin.right,
-      xScale    = d3.scaleTime().domain(d3.extent(data, d => d.date)),
-      yScale    = d3.scaleLinear().domain([0, d3.max(d => d.price)])
-      // xScale    = d3.scaleTime().domain([minX, maxX]).range([0, axlWidth]),
-      // yScale    = d3.scaleLinear().domain([minY, maxY]).range([axlHeight, 0])
+      // xScale    = d3.scaleTime().domain(d3.extent(data, d => d.date)),
+      // yScale    = d3.scaleLinear().domain([0, d3.max(d => d.price)])
+      xScale    = d3.scaleTime().domain([minX, maxX]).range([0, axlWidth]),
+      yScale    = d3.scaleLinear().domain([minY, maxY]).range([axlHeight, 0])
   
     return {
       xScale,
@@ -104,10 +104,10 @@ class LineChart extends React.Component {
       axlWidth  = width - margin.left - margin.right,
       frmHeight = height + margin.top + margin.bottom,
       frmWidth  = width + margin.left + margin.right,
-      xScale    = d3.scaleTime().domain(d3.extent(data, d => d.date)),
-      yScale    = d3.scaleLinear().domain([0, d3.max(d => d.price)]),
-      // xScale    = d3.scaleTime().domain([minX, maxX]).range([0, axlWidth]),
-      // yScale    = d3.scaleLinear().domain([minY, maxY]).range([axlHeight, 0]),
+      // xScale    = d3.scaleTime().domain(d3.extent(data, d => d.date)),
+      // yScale    = d3.scaleLinear().domain([0, d3.max(d => d.price)]),
+      xScale    = d3.scaleTime().domain([minX, maxX]).range([0, axlWidth]),
+      yScale    = d3.scaleLinear().domain([minY, maxY]).range([axlHeight, 0]),
       xAxis     = d3.axisBottom().scale(xScale).ticks(20).tickSize(-axlHeight),
       yAxis     = d3.axisLeft().scale(yScale).ticks(10).tickSize(-axlWidth),
       line      = d3.selectAll("#line"),
@@ -115,10 +115,10 @@ class LineChart extends React.Component {
       hori      = d3.select('#hori'),
       vert      = d3.select('#vert')
 
-      // console.log('svg = ', svg)
-      // console.log('hori = ', hori)
-      // console.log('vert = ', vert)
-      // console.log('line = ', line)
+      console.log('frmHeight = ', frmHeight)
+      console.log('frmWidth = ', frmWidth)
+      console.log('axlHeight = ', axlHeight)
+      console.log('axlWidth = ', axlWidth)
 
     svg
       .attr("width", frmWidth.toString())
@@ -137,7 +137,7 @@ class LineChart extends React.Component {
       .duration(1000)
       .ease(easement)
       .attr("stroke-width", 1)
-      .attr("transform", "translate(" + margin.left + ", 0)")
+      // .attr("transform", "translate(" + margin.left + ", 0)")
       .call(yAxis)
 
     if (isFirstLoad && line) {
@@ -199,6 +199,9 @@ class LineChart extends React.Component {
       borderRadius: 5,
       margin: "0 auto"
     }
+
+    
+
 
     // const minX = d3.min(data.map(o => o.date))
     // const maxX = d3.max(data.map(o => o.date))
@@ -271,31 +274,19 @@ class LineChart extends React.Component {
             <small>last update: {NUMERIC.date} ({NUMERIC.alert})</small>
           </div>
         </div>*/}
-        {/* <svg className="svg" height={frmHeight} width={frmWidth}> */}
-        <svg className="svg">
-          {/* <defs>
-            <linearGradient id="MyGradient">
-              <stop offset="-10%" stopColor="#3b83d4" />
-              <stop offset="95%" stopColor="#6788ad" />
-            </linearGradient>
-          </defs> */}
+        <svg className="svg" height={600} width={820}>
+        {/* <svg className="svg"> */}
+          <g transform="translate(50,20)"></g>
           <path
             id={"line"}
             d={this.drawLine(data, height, width, margin)}
             fill={"transparent"}
             stroke={"transparent"}
           />
-            {/* <path
-              id={"area"}
-              d={area(data)}
-              fill={"url(#MyGradient)"}
-              style={{ opacity: 0.8 }}
-            /> */}
-          <g id="hori">
+          <g id="hori" height={400} width={680}>
           </g>
-          <g id="vert">
+          <g id="vert" height={400} width={680}>
           </g>
-
         </svg>
         <div className="select">
           <form>
