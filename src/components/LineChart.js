@@ -104,8 +104,6 @@ class LineChart extends React.Component {
       axlWidth  = width - margin.left - margin.right,
       frmHeight = height + margin.top + margin.bottom,
       frmWidth  = width + margin.left + margin.right,
-      // xScale    = d3.scaleTime().domain(d3.extent(data, d => d.date)),
-      // yScale    = d3.scaleLinear().domain([0, d3.max(d => d.price)]),
       xScale    = d3.scaleTime().domain([minX, maxX]).range([0, axlWidth]),
       yScale    = d3.scaleLinear().domain([minY, maxY]).range([axlHeight, 0]),
       xAxis     = d3.axisBottom().scale(xScale).ticks(20).tickSize(-axlHeight),
@@ -113,25 +111,21 @@ class LineChart extends React.Component {
       line      = d3.selectAll("#line"),
       svg       = d3.select('.svg'),
       hori      = d3.select('#hori'),
-      vert      = d3.select('#vert')
-
-      console.log('frmHeight = ', frmHeight)
-      console.log('frmWidth = ', frmWidth)
-      console.log('axlHeight = ', axlHeight)
-      console.log('axlWidth = ', axlWidth)
+      vert      = d3.select('#vert'),
+      scootRt   = 40,
+      scootLf   = -180,
+      scootDn   = 0
 
     svg
       .attr("width", frmWidth.toString())
       .attr("height", frmHeight.toString())
-      // .append("g")
-      // .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
 
     hori.transition()
       .duration(1000)
       .ease(easement)
       .attr("stroke-width", 1)
       .attr("width", "880") 
-      .attr("transform", `translate(5, ${axlHeight})`)
+      .attr("transform", `translate(${scootRt}, ${axlHeight+scootDn})`)
       .call(xAxis)
 
     vert.transition()
@@ -139,10 +133,16 @@ class LineChart extends React.Component {
       .ease(easement)
       .attr("stroke-width", 1)
       .attr("text-anchor", "end")
+      .attr("transform", `translate(${scootRt}, ${scootDn})`)
       .call(yAxis)
 
-    let horiTicks = d3.selectAll('#vert .tick text')
-    horiTicks.attr("transform", `translate(${axlWidth+10}, 0)`)
+    let 
+      horiTickText = d3.selectAll('#vert .tick text'),
+      vertTickText = d3.selectAll('#hori .tick text')
+
+    horiTickText.attr("transform", `translate(${axlWidth+scootRt}, ${scootDn})`)
+    vertTickText.attr("transform", `translate(${scootLf},0)`)
+    line.attr("transform", `translate(${scootRt}, ${scootDn})`)
 
     if (isFirstLoad && line) {
       // console.log('line = ', line)
@@ -158,6 +158,7 @@ class LineChart extends React.Component {
         .ease(easement)
         // .attr("stroke-width", 0) // this makes the line disappear
         .attr("stroke-dashoffset", 0)
+      
     } else if (line) {
       line.transition()
         .duration(1000)
@@ -227,9 +228,9 @@ class LineChart extends React.Component {
             fill={"transparent"}
             stroke={"transparent"}
           />
-          <g id="hori" height={400} width={880}>
+          <g id="hori">
           </g>
-          <g id="vert" height={400} width={680}>
+          <g id="vert">
           </g>
         </svg>
         <div className="select">

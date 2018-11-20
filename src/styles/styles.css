@@ -48,7 +48,7 @@ Body {
 /* LineChart.js */
 
 svg {
-  margin-left: 30px;
+  padding-left: 30px;
 }
 
 .lineChart {
@@ -93,6 +93,6 @@ text {
 }
 
 #hori .tick text {
-  transform: rotate(45deg) !important;
+  transform: rotate(-45deg) !important;
   font-size: 15px;
 }
