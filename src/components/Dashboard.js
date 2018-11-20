@@ -4,8 +4,10 @@ import LineChart from './LineChart'
 import { getSecuritiesInfo } from '../helpers'
 import integrateData from './APIcall'
 
-const widMod = .60
-
+const 
+  rat = .66,
+  width = 750,
+  height = width * rat
 class Dashboard extends Component {
   constructor() {
     super()
@@ -13,8 +15,8 @@ class Dashboard extends Component {
       isFetchingAPI: false,
       // body_width: document.body.clientWidth * widMod,
       margin: {top: 20, right: 20, bottom: 80, left: 50},
-      height: 500,
-      width: 750,
+      height,
+      width,
       securities: getSecuritiesInfo(),
       security: 'MMM',
       timeScales: {'1D':1, '1W':8, '1M':32, '3M':(94), '6M':(187), '1Y':(366), '2Y':(731)},

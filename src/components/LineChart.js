@@ -123,22 +123,26 @@ class LineChart extends React.Component {
     svg
       .attr("width", frmWidth.toString())
       .attr("height", frmHeight.toString())
-      .append("g")
-      .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+      // .append("g")
+      // .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
 
     hori.transition()
       .duration(1000)
       .ease(easement)
       .attr("stroke-width", 1)
-      .attr("transform", "translate(0," + axlHeight + ")")
+      .attr("width", "880") 
+      .attr("transform", `translate(5, ${axlHeight})`)
       .call(xAxis)
 
     vert.transition()
       .duration(1000)
       .ease(easement)
       .attr("stroke-width", 1)
-      // .attr("transform", "translate(" + margin.left + ", 0)")
+      .attr("text-anchor", "end")
       .call(yAxis)
+
+    let horiTicks = d3.selectAll('#vert .tick text')
+    horiTicks.attr("transform", `translate(${axlWidth+10}, 0)`)
 
     if (isFirstLoad && line) {
       // console.log('line = ', line)
@@ -200,64 +204,6 @@ class LineChart extends React.Component {
       margin: "0 auto"
     }
 
-    
-
-
-    // const minX = d3.min(data.map(o => o.date))
-    // const maxX = d3.max(data.map(o => o.date))
-    // const minY = d3.min(data.map(o => o.price))
-    // const maxY = d3.max(data.map(o => o.price))
-
-    // let xScale = d3
-    //   .scaleLinear()
-    //   .domain([minX, maxX])
-    //   .range([0, width])
-
-    // let yScale = d3
-    //   .scaleTime()
-    //   .domain([minY, maxY])
-    //   .range([height, height / 3])
-
-    // let line = d3
-    //   .line()
-    //   .x(function(d) {
-    //     return xScale(d.date)
-    //   })
-    //   .y(function(d) {
-    //     return yScale(d.price)
-    //   })
-    
-    // d3.select(".svg")
-    //   .attr("width", frmWidth.toString())
-    //   .attr("height", frmHeight.toString())
-    //   .append("g")
-    //   .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
-
-    // let xAxis = d3.axisBottom().scale(xScale).ticks(20).tickSize(-height)
-    // let yAxis = d3.axisLeft().scale(yScale).ticks(10).tickSize(-width)
-
-    // hori      = d3.select('#hori'),
-    //   vert      = d3.select('#vert')
-
-    // d3.select('#hori')
-    //   .attr("transform", "translate(0," + height + ")")
-    //   .call(xAxis)
-    
-    // d3.select('#vert')
-    //   .call(yAxis)
-
-    // let area = d3
-    //   .area()
-    //   .x(function(d) {
-    //     return x(d.date)
-    //   })
-    //   .y0(function(d) {
-    //     return maxY
-    //   })
-    //   .y1(function(d) {
-    //     return y(d.price)
-    //   })
-
     return (
       <div style={boxStyles}>
   
@@ -275,15 +221,13 @@ class LineChart extends React.Component {
           </div>
         </div>*/}
         <svg className="svg" height={600} width={820}>
-        {/* <svg className="svg"> */}
-          <g transform="translate(50,20)"></g>
           <path
             id={"line"}
             d={this.drawLine(data, height, width, margin)}
             fill={"transparent"}
             stroke={"transparent"}
           />
-          <g id="hori" height={400} width={680}>
+          <g id="hori" height={400} width={880}>
           </g>
           <g id="vert" height={400} width={680}>
           </g>

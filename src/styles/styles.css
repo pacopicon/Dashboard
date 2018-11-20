@@ -1,7 +1,8 @@
 Body {
-  font-family: 'Poppins', sans-serif;
-  /*font-family: 'Montserrat', sans-serif*/
-  /*background-color: black;*/
+  /* font-family: 'Dorsa', sans-serif; */
+  /* font-family: 'Work Sans', sans-serif; */
+  font-family: 'Source Sans Pro', sans-serif;
+  /* font-family: 'Roboto', sans-serif; */
   background-color:black;
 }
 
@@ -46,6 +47,10 @@ Body {
 
 /* LineChart.js */
 
+svg {
+  margin-left: 30px;
+}
+
 .lineChart {
   height: 100%;
 }
@@ -57,19 +62,9 @@ Body {
   background-color: white;
 }
 
-/* #hori line {
-  fill: none;
-  stroke: white;
-  stroke-width: 1;
-}
-
-path.domain {
-  fill: none;
-  stroke: white;
-} */
-
 path {
   /* fill: #58B5FD; */
+  /* margin-left: 30px; */
   fill: none;
   shape-rendering: geometricPrecision;
   /*stroke: #58B5FD;*/
@@ -86,17 +81,18 @@ path {
 text {
   fill: white;
   font-size: 15px;
+  font-family: 'Source Sans Pro', sans-serif;
 }
 
 #vert .tick text {
-  text-anchor: end;
-}
-
-#hori {
   text-anchor: start;
 }
 
+#hori {
+  text-anchor: end;
+}
+
 #hori .tick text {
-  transform: rotate(-45deg) !important;
+  transform: rotate(45deg) !important;
   font-size: 15px;
 }
