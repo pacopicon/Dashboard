@@ -3,7 +3,7 @@ Body {
   /* font-family: 'Work Sans', sans-serif; */
   font-family: 'Source Sans Pro', sans-serif;
   /* font-family: 'Roboto', sans-serif; */
-  background-color:#091326;
+  background-color:#090D18;
   ;
 }
 
@@ -87,11 +87,12 @@ text {
   text-anchor: end;
 }
 
-#hori {
-  text-anchor: end;
+#vert, #hori, #line {
+  margin-top: 20px;
 }
 
 #hori .tick text {
   transform: rotate(-45deg) !important;
   font-size: 15px;
+  text-anchor: end;
 }
