@@ -3,7 +3,8 @@ Body {
   /* font-family: 'Work Sans', sans-serif; */
   font-family: 'Source Sans Pro', sans-serif;
   /* font-family: 'Roboto', sans-serif; */
-  background-color:black;
+  background-color:#091326;
+  ;
 }
 
 .hidden {
@@ -55,11 +56,9 @@ svg {
   height: 100%;
 }
 
-#hori, #vert {
-  fill: none;
+#hori, #vert, path.domain, .tick line {
   stroke: white;
-  color: white;
-  background-color: white;
+  stroke-width: 0.5;
 }
 
 path {
@@ -73,9 +72,9 @@ path {
   /* transition-timing-function: ease-in-out; */
 }
 
-.tick line{
-  opacity: 0.5;
-  stroke: white;
+path#line {
+  stroke: rgb(234, 43, 255);
+  stroke-width: 1;
 }
 
 text {
@@ -85,7 +84,7 @@ text {
 }
 
 #vert .tick text {
-  text-anchor: start;
+  text-anchor: end;
 }
 
 #hori {

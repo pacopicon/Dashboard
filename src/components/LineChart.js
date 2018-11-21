@@ -113,7 +113,7 @@ class LineChart extends React.Component {
       hori      = d3.select('#hori'),
       vert      = d3.select('#vert'),
       scootRt   = 40,
-      scootLf   = -180,
+      scootLf   = 0,
       scootDn   = 0
 
     svg
@@ -163,8 +163,6 @@ class LineChart extends React.Component {
       line.transition()
         .duration(1000)
         .ease(easement)
-        .attr("stroke-width", 1)
-        .attr("stroke", "#6788ad")
         .attr("d", this.drawLine(data, height, width, margin))
         .on("end", () => 
           this.setState({
