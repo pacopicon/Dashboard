@@ -28,10 +28,12 @@ class LineChart extends React.Component {
       data    = nextProps.data,
       height  = nextProps.height,
       width   = nextProps.width,
-      margin  = nextProps.margin
-    
-    if (oldData != data) {
-      this.applyTransitions(margin, height, width, data, false)
+      margin  = nextProps.margin,
+      scootRt = nextProps.scootRt,
+      tickTxtSz = nextProps.tickTextSize
+
+    if (oldData != data && tickTxtSz) {
+      this.applyTransitions(margin, height, width, scootRt, tickTxtSz, data, false)
     }
   }
 
@@ -42,18 +44,22 @@ class LineChart extends React.Component {
           TEXT,
           height,
           width,
-          margin
+          margin,
+          scootRt,
+          tickTxtSz
         } = this.props
-
+console.log('tickTxtSz = ', tickTxtSz)
     this.setState({
       data,
       NUMERIC,
       TEXT,
       height,
       width,
-      margin
+      margin,
+      scootRt,
+      tickTxtSz
     }, () => {
-      this.applyTransitions(margin, height, width, data, true)
+      this.applyTransitions(margin, height, width, scootRt, tickTxtSz, data, false)
     })
   }
 
@@ -65,8 +71,6 @@ class LineChart extends React.Component {
       maxY      = d3.max(data.map(o => o.price)),
       axlHeight = height - margin.top - margin.bottom,
       axlWidth  = width - margin.left - margin.right,
-      // xScale    = d3.scaleTime().domain(d3.extent(data, d => d.date)),
-      // yScale    = d3.scaleLinear().domain([0, d3.max(d => d.price)])
       xScale    = d3.scaleTime().domain([minX, maxX]).range([0, axlWidth]),
       yScale    = d3.scaleLinear().domain([minY, maxY]).range([axlHeight, 0])
   
@@ -94,7 +98,8 @@ class LineChart extends React.Component {
     return drawLine(data)
   }
 
-  applyTransitions = (margin, height, width, data, isFirstLoad) => {
+  applyTransitions = (margin, height, width, scootRt, tickTxtSz, data, isFirstLoad) => {
+    console.log('tickTxtSz = ', tickTxtSz)
     let 
       minX      = d3.min(data.map(o => o.date)),
       maxX      = d3.max(data.map(o => o.date)),
@@ -112,7 +117,6 @@ class LineChart extends React.Component {
       svg       = d3.select('.svg'),
       hori      = d3.select('#hori'),
       vert      = d3.select('#vert'),
-      scootRt   = 40,
       scootLf   = 0,
       scootDn   = 0
 
@@ -124,8 +128,8 @@ class LineChart extends React.Component {
       .duration(1000)
       .ease(easement)
       .attr("stroke-width", 1)
-      .attr("width", "880") 
-      .attr("transform", `translate(${scootRt}, ${axlHeight+scootDn})`)
+      .attr("width", "880")
+      .attr("transform", `translate(${scootRt}, ${axlHeight})`)
       .call(xAxis)
 
     vert.transition()
@@ -140,9 +144,14 @@ class LineChart extends React.Component {
       horiTickText = d3.selectAll('#vert .tick text'),
       vertTickText = d3.selectAll('#hori .tick text')
 
-    horiTickText.attr("transform", `translate(${axlWidth+scootRt}, ${scootDn})`)
-    vertTickText.attr("transform", `translate(${scootLf},0)`)
-    line.attr("transform", `translate(${scootRt}, ${scootDn})`)
+    horiTickText
+      .attr("transform", `translate(${axlWidth+scootRt}, ${scootDn})`)
+      .attr("font-size", `${tickTxtSz} px`)
+    vertTickText
+      .attr("transform", `translate(${scootLf},0)`)
+      .attr("font-size", `${tickTxtSz} px`)
+    line
+      .attr("transform", `translate(${scootRt}, ${scootDn})`)
 
     if (isFirstLoad && line) {
       // console.log('line = ', line)

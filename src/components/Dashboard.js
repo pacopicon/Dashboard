@@ -6,7 +6,7 @@ import integrateData from './APIcall'
 
 const 
   rat = .66,
-  width = 750,
+  width = 500,
   height = width * rat
 class Dashboard extends Component {
   constructor() {
@@ -17,6 +17,8 @@ class Dashboard extends Component {
       margin: {top: 20, right: 20, bottom: 80, left: 50},
       height,
       width,
+      scootRt: 40,
+      tickTextSize: 30,
       securities: getSecuritiesInfo(),
       security: 'MMM',
       timeScales: {'1D':1, '1W':8, '1M':32, '3M':(94), '6M':(187), '1Y':(366), '2Y':(731)},
@@ -217,6 +219,8 @@ class Dashboard extends Component {
               margin={this.state.margin}
               height={this.state.height}
               width={width}
+              scootRt={this.state.scootRt}
+              tickTextSize={this.state.tickTextSize}
               data={this.state.currPrice}
               TEXT={this.state.TEXT}
               NUMERIC={this.state.NUMERIC}

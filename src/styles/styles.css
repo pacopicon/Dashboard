@@ -77,9 +77,9 @@ path#line {
   stroke-width: 1;
 }
 
-text {
+.tick text {
   fill: white;
-  font-size: 15px;
+  /* font-size: 10px; */
   font-family: 'Source Sans Pro', sans-serif;
 }
 
@@ -93,6 +93,5 @@ text {
 
 #hori .tick text {
   transform: rotate(-45deg) !important;
-  font-size: 15px;
   text-anchor: end;
 }
