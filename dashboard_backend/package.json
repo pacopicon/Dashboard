@@ -9,10 +9,18 @@
     "test3": "node test3.js"
   },
   "dependencies": {
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
     "dotenv": "^4.0.0",
     "d3-time-format": "2.0.5",
     "axios": "^0.18.0",
+    "jsonwebtoken": "^8.1.0",
     "mssql": "^4.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.17.3"
   },
   "keywords": [
     "tester"

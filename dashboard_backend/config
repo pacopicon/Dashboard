@@ -1,0 +1,4 @@
+module.exports = {
+		'secret': 'youNeedToSetUpASecretPhraseFromMongoDbIthink',
+		'database': 'mongodb://localhost:27017/paco'
+};

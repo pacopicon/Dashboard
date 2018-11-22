@@ -1,6 +1,9 @@
-let { timeParse, timeFormat } = require('d3-time-format')
-
-let axios = require('axios')
+const 
+  { timeParse, timeFormat } = require('d3-time-format'),
+  fs                        = require('fs'),
+  fileContents              = require('./data'),
+  axios                     = require('axios'),
+  utils                     = require('../helpers/utils')
 
 const exposePrices = (obj) => {
   let result = [];
@@ -154,8 +157,41 @@ const packageData = (data, datum) => {
   return output
 }
 
-exports.integrateData = async (symbol, callback) => {
-  let
+const writeData = (datum, symbol) => {
+
+  let writeStream = ''
+
+  if (utils.isEmpty(fileContents)) {
+    writeStream += "module.exports = {}\n\n"
+  }
+
+  writeStream += `let ${symbol} = ` + JSON.stringify(datum)
+
+  writeStream += `\n\nmodule.exports.${symbol} = ${symbol}\n\n`
+
+  let comm = `let com = "crickey"`
+
+  fs.appendFile('data.js', comm, (err) => {
+    if (err) {
+      console.log('Did not write log => ', err)
+    } else {
+      console.log('data.js has been updated')
+    }
+  })
+}
+
+exports.getSecurities = async (req, res) => {
+  let 
+    symbol = req.body.symbol,
+    data = fileContents[symbol]
+
+  if (data) {
+
+    return res.status(200).json({ success: true, data })
+
+  } else {
+
+    let
     http1  = `https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${symbol}&interval=1min&outputsize=full&apikey=5JSEEXSISXT9VKNO`,
     http2  = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${symbol}&outputsize=full&apikey=5JSEEXSISXT9VKNO`
     
@@ -164,13 +200,18 @@ exports.integrateData = async (symbol, callback) => {
               datum = parseData(datum.data, 1)
               await axios.get(http2)
                       .then( (datums) => {
-                        let timeScales = [8, 32, 94, 187, 366, 731]
-                        let data = []
+                        let 
+                          timeScales = [8, 32, 94, 187, 366, 731],
+                          data       = []
                         for (let i=0; i<timeScales.length; i++) {
                           data.push(parseData(datums.data, timeScales[i]))
                         }
                         let output = packageData(data, datum)
-                        callback(output, symbol)
+
+                        writeData(output, symbol)
+
+                        return res.status(200).json({ success: true, data: { token: token, profile: user } })
+
                       })
                       .catch( (error) => {
                         console.log(error);
@@ -179,4 +220,9 @@ exports.integrateData = async (symbol, callback) => {
             .catch( (error) => {
               console.log(error);
             });
+
+  }
 }
+
+
+
