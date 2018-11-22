@@ -31,6 +31,7 @@ var allowCrossDomain = function(req, res, next) {
 }
 app.use(allowCrossDomain);
 
+app.use('/', routes);
 
 // Set Port
 app.set('port', (process.env.BACKEND_PORT || 3001));

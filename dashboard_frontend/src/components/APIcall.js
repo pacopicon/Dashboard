@@ -204,9 +204,11 @@ const backendUrl = 'http://localhost:3001/';
 // export default integrateData
 
 const integrateData = async(symbol, callback, checkIfItsFetching) => {
-  let route = 'user'
+  let 
+    route = 'securities',
+    payload = { symbol }
   checkIfItsFetching(true)
-  return axios.get(`${backendUrl}${route}`)
+  return axios.post(`${backendUrl}${route}`, payload)
     .then(response => {
       const {success, data} = response
 
@@ -220,7 +222,6 @@ const integrateData = async(symbol, callback, checkIfItsFetching) => {
     .catch(err => {
       console.log(err)
     })
-
-  
-
 }
+
+export default integrateData

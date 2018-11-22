@@ -157,9 +157,11 @@ const packageData = (data, datum) => {
   return output
 }
 
-const writeData = (datum, symbol) => {
+const writeData = (datum, symbol, callback) => {
 
-  let writeStream = ''
+  let 
+    writeStream = '',
+    msg = ''
 
   if (utils.isEmpty(fileContents)) {
     writeStream += "module.exports = {}\n\n"
@@ -169,13 +171,15 @@ const writeData = (datum, symbol) => {
 
   writeStream += `\n\nmodule.exports.${symbol} = ${symbol}\n\n`
 
-  let comm = `let com = "crickey"`
-
-  fs.appendFile('data.js', comm, (err) => {
+  fs.appendFile('data.js', writeStream, (err) => {
     if (err) {
-      console.log('Did not write log => ', err)
+      msg = `Did not write log => , ${err}`
+      console.log(msg)
+      callback(msg)
     } else {
-      console.log('data.js has been updated')
+      msg = 'data.js has been updated'
+      console.log(msg)
+      callback(msg)
     }
   })
 }
@@ -184,6 +188,8 @@ exports.getSecurities = async (req, res) => {
   let 
     symbol = req.body.symbol,
     data = fileContents[symbol]
+
+    console.log('req.body = ', req.body)
 
   if (data) {
 
@@ -208,9 +214,11 @@ exports.getSecurities = async (req, res) => {
                         }
                         let output = packageData(data, datum)
 
-                        writeData(output, symbol)
+                        writeData(output, symbol, (msg) => {
+                          return res.status(200).json({ success: true, data: output, msg })
+                        })
 
-                        return res.status(200).json({ success: true, data: { token: token, profile: user } })
+                        
 
                       })
                       .catch( (error) => {

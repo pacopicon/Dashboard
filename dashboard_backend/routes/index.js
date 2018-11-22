@@ -100,6 +100,9 @@ router.put('/user', (req, res) => {
 
 // SECURITIES
 
-router.get('/securities', (req, res) => {
+router.post('/securities', (req, res) => {
+  console.log('This kicked off')
   securitiesController.getSecurities(req, res)
 })
+
+module.exports = router;
