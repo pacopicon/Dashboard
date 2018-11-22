@@ -135,7 +135,7 @@ let _getUserById = async function(userId, getPassword) {
   return {error, user, disabledError};
 }
 
-exports.getUser = function(req, res) {
+exports.getUser = async function(req, res) {
   let response = await _getUserById (req.currentUser.Id, false);
 	if (response.error){
     return res.send(response.error);

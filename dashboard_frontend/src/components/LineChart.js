@@ -2,7 +2,6 @@ import * as React from "react"
 import * as d3 from "d3"
 import { easement } from '../helpers'
 import '../styles/styles.css'
-import * as Axis from "d3-axis"
 
 class LineChart extends React.Component {
   constructor() {

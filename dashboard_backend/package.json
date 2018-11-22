@@ -4,18 +4,19 @@
   "description": "small program to test node code",
   "main": "test.js",
   "scripts": {
-    "test": "node test.js",
-    "test2": "node test2.js",
-    "test3": "node test3.js"
+    "start": "node app.js",
+    "mon": "nodemon app.js"
   },
   "dependencies": {
     "passport": "^0.4.0",
+    "cookie-parser": "^1.4.3",
     "passport-local": "^1.0.0",
     "body-parser": "^1.18.2",
     "express": "^4.16.2",
     "dotenv": "^4.0.0",
     "d3-time-format": "2.0.5",
     "axios": "^0.18.0",
+    "morgan": "^1.9.0",
     "jsonwebtoken": "^8.1.0",
     "mssql": "^4.1.0"
   },

@@ -1,0 +1,16 @@
+{
+  "name": "Dashboard",
+  "version": "1.0.0",
+  "description": "small cli tool to run FE and BE servers simultaneously",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "concurrently \"cd dashboard_frontend && npm start\" \"cd dashboard_backend && npm run mon\"  "
+  },
+  "keywords": [],
+  "author": "paco",
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^4.0.1"
+  }
+}
